@@ -8,7 +8,7 @@ for representing epistemic ambiguity at the option level.
 Companion repository for the preprint:
 
 > Yukiko Kato, *A Four-Valued Graph Model for Conflict Resolution: Core
-> Framework and a Machine-Checked Formalization in Lean 4*, arXiv:XXXX.XXXXX.
+> Framework and a Machine-Checked Formalization in Lean 4*. Preprint forthcoming on arXiv.
 
 ## Contents
 
