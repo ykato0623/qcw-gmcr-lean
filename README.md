@@ -17,7 +17,7 @@ Basic.lean          -- the formalization (classical GMCR + coalition stability +
 lakefile.toml       -- Lake project configuration (mathlib dependency)
 lean-toolchain      -- pinned Lean version (leanprover/lean4:v4.21.0)
 lake-manifest.json  -- resolved dependency revisions (exact mathlib commit)
-paper/              -- arXiv preprint (qcw_gmcr_arxiv.tex, .pdf)
+
 ```
 
 The pinned `lean-toolchain` and the mathlib revision recorded in
