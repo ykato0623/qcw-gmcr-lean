@@ -1,0 +1,10 @@
+name = "qcw_gmcr"
+defaultTargets = ["Basic"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+version = "git#v4.21.0"
+
+[[lean_lib]]
+name = "Basic"
