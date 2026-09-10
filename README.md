@@ -110,18 +110,7 @@ exhaustiveness of the four deterministic classical-extension reduction
 operators (Thm. 5.5) is proved in the preprint, and its per-operator axioms
 are machine-checked.
 
-## Citation
 
-```bibtex
-@misc{kato2026qcwgmcr,
-  title   = {A Four-Valued Graph Model for Conflict Resolution:
-             Core Framework and a Machine-Checked Formalization in Lean 4},
-  author  = {Kato, Yukiko},
-  year    = {2026},
-  eprint  = {XXXX.XXXXX},
-  archivePrefix = {arXiv}
-}
-```
 
 ## License
 
