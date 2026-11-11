@@ -1,5 +1,5 @@
 name = "qcw_gmcr"
-defaultTargets = ["Basic"]
+defaultTargets = ["Basic", "Robust"]
 
 [[require]]
 name = "mathlib"
@@ -8,3 +8,6 @@ version = "git#v4.21.0"
 
 [[lean_lib]]
 name = "Basic"
+
+[[lean_lib]]
+name = "Robust"

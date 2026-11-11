@@ -14,6 +14,7 @@ Companion repository for the preprint:
 
 ```
 Basic.lean          -- the formalization (classical GMCR + coalition stability + four-valued layer)
+Robust.lean         -- robust stability under epistemic disturbance (Lean core only)
 lakefile.toml       -- Lake project configuration (mathlib dependency)
 lean-toolchain      -- pinned Lean version (leanprover/lean4:v4.21.0)
 lake-manifest.json  -- resolved dependency revisions (exact mathlib commit)
@@ -77,6 +78,60 @@ this commit.
   (`QcwHypergame`) with a shared-safe-core membership predicate over supplied
   subjective state spaces (`is_in_shared_safe_core`).
 
+### Part 4 — Robust stability under epistemic disturbance (`Robust.lean`)
+
+Companion formalization for the preprint *Robust Stability under Epistemic
+Disturbance in the Graph Model for Conflict Resolution* (Y. Kato), the sequel to
+*Epistemic Disturbance in the Graph Model for Conflict Resolution*
+(arXiv:2610.11690). `Robust.lean` is self-contained (Lean core only; it does not
+import Mathlib or `Basic.lean`); its four-valued layer (`Val4`, `conj`, the
+knowledge order, `delta_cons/prec/opt/cont`) follows the definitions of
+`Basic.lean`, inside the namespace `RobustGMCR`. Stability is stated in a
+perceived model with legal sequences of opponents' moves and, for SEQ, credible
+moves, as in the preprint.
+
+- **Verified:** monotonicity of Nash, GMR, SMR and SEQ stability in move sets
+  (`stable_mono`); soundness of the pessimistic and optimistic tests
+  (`sound_pess`, `sound_opt`) for any set of epistemic states containing the
+  reachable set; reachable sets lie in the product of componentwise closures
+  and, under monotone accumulation, in the upper set of the start
+  (`reach_local`, `reach_upset`), giving the evidence-agnostic test
+  (`sound_agnostic`); exactness of the pessimistic test for product sets of
+  epistemic states under componentwise operators (`exact_pess`,
+  `exact_robust_iff`), with `delta_prec`, `delta_cont` and `delta_cons` shown
+  componentwise (`prec_componentwise`, `cont_componentwise`,
+  `cons_componentwise`) and `delta_opt` shown not to be
+  (`opt_not_componentwise`); from definite starts, the collapse of `delta_opt`
+  to `delta_prec` and of `delta_cons` to `delta_cont` (`opt_eq_prec_of_ne_U`,
+  `cons_eq_cont_of_ne_U`, `conjList_ne_U`), and the bluff/denial theorem at
+  the level of perceived models (`bluff_model`, `denial_model`).
+- `#print axioms`: `stable_mono`, `sound_pess`, `sound_opt`, the hierarchy
+  theorems and `stable_legal_imp_unrestricted` use no axioms;
+  the other listed theorems use only `propext` (and, for exactness,
+  `Classical.choice` and `Quot.sound`). No `sorry`.
+- **Legal versus unrestricted reachability:** `Stable` uses legal sequences
+  (no DM moves twice in succession; Fang–Hipel–Kilgour 1993), `StableU` the
+  unrestricted reachability used by `CMove`/`CUI` in `Basic.lean`. Verified:
+  legal ⊆ unrestricted reachability (`LReach.toUReach`, the analogue of
+  `lmove_imp_cmove`); legal stability implies unrestricted stability for Nash,
+  GMR, SMR and SEQ (`stable_legal_imp_unrestricted`); the hierarchy
+  Nash ⇒ SMR ⇒ GMR and Nash ⇒ SEQ ⇒ GMR for both definitions
+  (`nash_imp_smr`, `smr_imp_gmr`, `nash_imp_seq`, `seq_imp_gmr` and their
+  `…U` versions; SEQ ⇒ GMR under `CredSub`, which holds in every perceived
+  model by `perceived_credSub`); and a four-state model in which a state is
+  GMR-stable with unrestricted but not with legal reachability
+  (`LegalCounterexample.unrestricted_gmr`, `LegalCounterexample.not_legal_gmr`).
+- Not formalized (proved in the preprint): the equality of the reachable set
+  with the product of componentwise closures for separable actions, exactness
+  for additive sign-coherent actions, and the results on equilibria, sequences
+  by a single actor and coalitions.
+
+Note: `Basic.lean` states GMR/SMR/SEQ with unrestricted coalition reachability
+(`CMove`, `CUI`), whereas the standard definitions, the preprints and
+`Robust.lean` use legal sequences (no DM moves twice in succession). The two
+definitions differ when an opponent's graph is not transitive; legal stability
+implies unrestricted stability, and the hierarchy holds for both (see above).
+
 All results in the repository compile without `sorry`.
 
 ## Building
@@ -87,7 +142,7 @@ repository root:
 
 ```bash
 lake exe cache get   # fetch prebuilt mathlib for the pinned revision
-lake build           # compiles Basic.lean; succeeds iff all theorems check
+lake build           # compiles Basic.lean and Robust.lean; succeeds iff all theorems check
 ```
 
 A successful `lake build` is the reproduction of the paper's central claim:
